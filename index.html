@@ -139,10 +139,11 @@
   }
   .wave-field{
     position:absolute; inset:0; display:flex; align-items:flex-end;
-    justify-content:center; gap:6px; opacity:0.4; z-index:0;
+    justify-content:space-between; opacity:0.4; z-index:0;
+    width:100%; padding:0 4px;
   }
   .wave-field span{
-    width:5px; border-radius:3px; background:var(--grad);
+    flex:1; max-width:5px; border-radius:3px; background:var(--grad);
     animation:wave 2.2s ease-in-out infinite; transform-origin:bottom;
   }
   @keyframes wave{ 0%,100%{transform:scaleY(0.25);} 50%{transform:scaleY(1);} }
@@ -469,7 +470,7 @@
 <script>
   (function(){
     const field = document.getElementById('waveField');
-    const barCount = 60;
+    const barCount = 100;
     for(let i=0;i<barCount;i++){
       const bar = document.createElement('span');
       const h = 30 + Math.random()*220;
