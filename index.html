@@ -216,6 +216,34 @@
     text-transform:uppercase; color:var(--c7); margin-bottom:8px;
   }
   .subsub p{color:var(--muted); font-size:14.5px; max-width:52ch;}
+  .findings-grid{
+  display:grid; grid-template-columns:repeat(2, 1fr);
+  gap:20px; margin-top:32px; max-width:720px;
+}
+
+.finding{
+  border:1px dashed var(--line);
+  padding:20px 24px;
+  display:flex; flex-direction:column; gap:6px;
+}
+
+.finding-label{
+  font-family:'IBM Plex Mono',monospace; font-size:13px;
+  letter-spacing:0.06em; text-transform:uppercase;
+  color:var(--c7); margin-bottom:4px;
+}
+
+.finding-title{
+  font-size:17px; font-weight:600;
+}
+
+.finding-text{
+  color:var(--muted); font-size:14.5px; margin:0;
+}
+
+@media (max-width:640px){
+  .findings-grid{grid-template-columns:1fr;}
+}
 
   /* ---------- DJ'S ---------- */
   .dj-list{display:flex; flex-direction:column; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:18px; overflow:hidden;}
@@ -434,9 +462,32 @@ Die Bachelorarbeit blieb dabei nicht auf einem theoretischen Konzept stehen. Die
     </div>
 
     <div class="subchapter reveal">
-      <h3 class="sub">Erkenntnisse</h3>
-      <p>Die Analyse bestätigte, dass Frauen in der elektronischen Musikszene weiterhin unterrepräsentiert sind. Als zentrale Gründe wurden fehlende Netzwerke, eine geringe mediale Sichtbarkeit sowie das Fehlen weiblicher Vorbilder genannt. Gleichzeitig zeigte sich, dass viele Künstlerinnen den Wunsch nach mehr Austausch, einer stärkeren Community und konkreten Auftrittsmöglichkeiten teilen. Diese Erkenntnisse bildeten die Grundlage für die Entwicklung von SHEWAVES.</p>
+  <h3 class="sub">Erkenntnisse</h3>
+  <p>Die Analyse bestätigte, dass Frauen in der elektronischen Musikszene weiterhin unterrepräsentiert sind. Vier zentrale Erkenntnisse bildeten die Grundlage für die Entwicklung von SHEWAVES:</p>
+
+  <div class="findings-grid">
+    <div class="finding">
+      <span class="finding-label">Key Finding 01</span>
+      <span class="finding-title">Unterrepräsentation</span>
+      <p class="finding-text">Frauen sind in der elektronischen Musikszene nach wie vor deutlich unterrepräsentiert.</p>
     </div>
+    <div class="finding">
+      <span class="finding-label">Key Finding 02</span>
+      <span class="finding-title">Netzwerke</span>
+      <p class="finding-text">Fehlende Netzwerke erschweren den Zugang – der Wunsch nach Austausch und Community ist gross.</p>
+    </div>
+    <div class="finding">
+      <span class="finding-label">Key Finding 03</span>
+      <span class="finding-title">Sichtbarkeit</span>
+      <p class="finding-text">Künstlerinnen erhalten wenig mediale Sichtbarkeit und konkrete Auftrittsmöglichkeiten.</p>
+    </div>
+    <div class="finding">
+      <span class="finding-label">Key Finding 04</span>
+      <span class="finding-title">Role Models</span>
+      <p class="finding-text">Es fehlt an weiblichen Vorbildern, die den Einstieg in die Szene greifbar machen.</p>
+    </div>
+  </div>
+</div>
 
     <div class="subchapter reveal">
       <h3 class="sub">Umsetzung</h3>
