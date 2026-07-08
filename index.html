@@ -423,6 +423,42 @@
   .subchapter p{font-size:15px;}
   .finding{padding:16px 18px;}
 }
+
+/* ---------- TIMELINE ---------- */
+.timeline{
+  margin-top:40px;
+  position:relative;
+  display:flex; flex-direction:column; gap:44px;
+  padding-left:32px;
+}
+.timeline::before{
+  content:""; position:absolute; left:0; top:6px; bottom:6px;
+  width:1px; background:linear-gradient(180deg, var(--c7), var(--c3));
+}
+.tl-item{position:relative;}
+.tl-item::before{
+  content:""; position:absolute; left:-36px; top:5px;
+  width:9px; height:9px; border-radius:50%;
+  background:var(--c7);
+  box-shadow:0 0 0 4px rgba(255,0,0,0.15);
+}
+.tl-date{
+  font-family:'IBM Plex Mono',monospace; font-size:12px;
+  letter-spacing:0.08em; text-transform:uppercase;
+  color:var(--muted); display:block; margin-bottom:6px;
+}
+.tl-title{
+  font-family:'Inter',sans-serif; font-size:17px; font-weight:600;
+  text-transform:none; margin-bottom:6px; color:var(--fg);
+}
+.tl-text{
+  color:var(--muted); font-size:14.5px; max-width:52ch; margin:0;
+}
+
+@media (max-width:640px){
+  .timeline{padding-left:24px; gap:36px;}
+  .tl-item::before{left:-28px;}
+}
 </style>
 </head>
 <body>
@@ -502,32 +538,38 @@
 
     <div class="subchapter reveal">
       <h3 class="sub">Umsetzung</h3>
-      <p>Text Text Text Text Text Text.</p>
+      <p>Aus den Erkenntnissen der Forschung entstand Schritt für Schritt ein reales Event – von der ersten Idee bis zur Eventnacht.</p>
 
-      <div class="subsub-list">
-        <div class="subsub">
-          <h4>Artistinnen finden</h4>
-          <p>Text Text Text.</p>
+      <div class="timeline">
+        <div class="tl-item reveal">
+          <span class="tl-date">März 2026</span>
+          <h4 class="tl-title">Konzept &amp; Branding</h4>
+          <p class="tl-text">Aus der Forschung wird eine Idee: Name, Logo und visuelle Identität von SHEWAVES entstehen.</p>
         </div>
-        <div class="subsub">
-          <h4>Location</h4>
-          <p>Text Text Text.</p>
+        <div class="tl-item reveal">
+          <span class="tl-date">April 2026</span>
+          <h4 class="tl-title">Artistinnen</h4>
+          <p class="tl-text">Sechs DJs aus der Schweizer Szene werden angefragt und bestätigt – das Line-up steht.</p>
         </div>
-        <div class="subsub">
-          <h4>Flyer &amp; Design</h4>
-          <p>Text Text Text.</p>
+        <div class="tl-item reveal">
+          <span class="tl-date">April 2026</span>
+          <h4 class="tl-title">Location</h4>
+          <p class="tl-text">Die passende Location ist gefunden – Verträge, Technik und Logistik werden geklärt.</p>
         </div>
-        <div class="subsub">
-          <h4>Fotograf:innen</h4>
-          <p>Text Text Text.</p>
+        <div class="tl-item reveal">
+          <span class="tl-date">Mai 2026</span>
+          <h4 class="tl-title">Flyer &amp; Design</h4>
+          <p class="tl-text">Flyer, Social-Media-Assets und Eventgrafiken entstehen im SHEWAVES-Look.</p>
         </div>
-        <div class="subsub">
-          <h4>Social Media</h4>
-          <p>Text Text Text.</p>
+        <div class="tl-item reveal">
+          <span class="tl-date">Mai 2026</span>
+          <h4 class="tl-title">Kommunikation</h4>
+          <p class="tl-text">Instagram-Kampagne, Pressearbeit und Community-Aufbau – SHEWAVES wird sichtbar.</p>
         </div>
-        <div class="subsub">
-          <h4>Weiterer Punkt</h4>
-          <p>Text Text Text.</p>
+        <div class="tl-item reveal">
+          <span class="tl-date">Juni 2026</span>
+          <h4 class="tl-title">Das Event</h4>
+          <p class="tl-text">Neun Stunden Musik, sechs Artists, ein voller Dancefloor – SHEWAVES wird Realität.</p>
         </div>
       </div>
     </div>
