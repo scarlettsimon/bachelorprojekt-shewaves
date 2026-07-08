@@ -496,24 +496,32 @@
   .tl-item:nth-child(even) .tl-text{margin-left:0;}
 }
 
-/* ---------- FLOATING LOGO ---------- */
-.logo-float{
+/* ---------- SCROLL-LOGO ---------- */
+  
+.logo-scroll{
   position:fixed;
-  left:clamp(12px,2vw,28px);
-  bottom:clamp(16px,3vw,32px);
-  width:44px; height:44px;
-  opacity:0.35;
-  z-index:50;
+  left:clamp(10px,1.5vw,24px);
+  top:14px;                    /* Startposition: auf Höhe des Nav-Logos */
+  width:40px; height:40px;
+  border-radius:8px;
+  opacity:0.9;
+  z-index:101;                 /* über der Nav, ersetzt optisch das Nav-Logo */
   pointer-events:none;
+  will-change:transform;
 }
 @media (max-width:700px){
-  .logo-float{display:none;}
+  .logo-scroll{display:none;}
 }
+
+@media (min-width:701px){
+  .nav .logo{visibility:hidden;}
+}
+  
 </style>
 </head>
 <body>
   
-<img src="Logo_pink.svg" alt="" class="logo-float" aria-hidden="true">
+<img src="Logo_pink.svg" alt="" class="logo-scroll" aria-hidden="true">
   
 <nav class="nav" id="nav">
   <a href="#top" class="logo"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTGF5ZXJfMiIgZGF0YS1uYW1lPSJMYXllciAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0ODcuMTQgNDg3LjE0Ij4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLmNscy0xIHsKICAgICAgICBmaWxsOiBub25lOwogICAgICAgIHN0cm9rZTogI2Y0NzFiNDsKICAgICAgICBzdHJva2UtbWl0ZXJsaW1pdDogMTA7CiAgICAgICAgc3Ryb2tlLXdpZHRoOiAxNXB4OwogICAgICB9CgogICAgICAuY2xzLTIgewogICAgICAgIGZpbGw6ICNmNDcxYjQ7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgPC9kZWZzPgogIDxnIGlkPSJMYXllcl8xIiBkYXRhLW5hbWU9IkxheWVyIDEiPgogICAgPHJlY3Qgd2lkdGg9IjQ4Ny4xNCIgaGVpZ2h0PSI0ODcuMTQiLz4KICAgIDxnPgogICAgICA8Y2lyY2xlIGNsYXNzPSJjbHMtMSIgY3g9IjE3MS4yOSIgY3k9IjI0My4zNCIgcj0iODcuOTgiLz4KICAgICAgPGNpcmNsZSBjbGFzcz0iY2xzLTEiIGN4PSIzMTUuODUiIGN5PSIyNDMuOCIgcj0iODcuOTgiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMzM4LjU1LDIzMy42NGwzLjgyLTE3LjAzaDE3LjM3bC0xNS45NSw1OS4xNmgtMTguNjFsLTMuNjYtMTcuNTNjLTEuNzItOC4zNi0zLjA1LTE1LjU3LTMuOTktMjEuNi0xLjA1LDYuNTQtMi40MSwxMy43NC00LjA3LDIxLjZsLTMuNjYsMTcuNTNoLTE4LjYxbC0xNS45NS01OS4xNmgxNy4zN2wzLjgyLDE3LjAzYzIuNDQsMTAuOCw0LjEsMTguNyw0Ljk5LDIzLjY4LDEuMjctNy43NiwyLjc0LTE1LjY1LDQuNC0yMy42OGwzLjQ5LTE3LjAzaDE2LjM3bDMuNDksMTcuMDNjMS42Niw4LjAzLDMuMTMsMTUuOTMsNC40LDIzLjY4Ljk0LTQuOTksMi42LTEyLjg4LDQuOTktMjMuNjhaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE3NC43NiwyMzcuODl2LTIxLjc5aDE2Ljc2djU5LjY4aC0xNi43NnYtMjIuOTdoLTIwLjU0djIyLjk3aC0xNi43NnYtNTkuNjhoMTYuNzZ2MjEuNzloMjAuNTRaIi8+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4=" alt="SHEWAVES Logo"></a>
@@ -779,6 +787,17 @@ From a young age, she was drawn to electronic music and quickly found her passio
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 40);
   });
+
+  const logoScroll = document.querySelector('.logo-scroll');
+function updateLogoScroll(){
+  const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = scrollable > 0 ? window.scrollY / scrollable : 0;
+  const track = window.innerHeight - 14 - 40 - 16; // Viewport minus top-Offset, Logohöhe, Randabstand unten
+  logoScroll.style.transform = `translateY(${progress * track}px)`;
+}
+window.addEventListener('scroll', updateLogoScroll, {passive:true});
+window.addEventListener('resize', updateLogoScroll);
+updateLogoScroll();
 
   const navToggle = document.getElementById('navToggle');
   const navList = document.getElementById('navList');
