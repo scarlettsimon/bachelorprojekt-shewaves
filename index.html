@@ -478,13 +478,14 @@
 
 /* ---------- PROJEKT INTRO ---------- */
 .lead{
-  font-size:clamp(19px,2.5vw,24px);
-  line-height:1.45;
+  font-size:clamp(21px,3.2vw,32px);
+  line-height:1.35;
   color:var(--fg) !important;
   font-weight:500;
-  margin-bottom:20px;
-  max-width:24ch !important;
+  max-width:none !important;
+  margin-bottom:0;
 }
+#about .grid{margin-top:clamp(36px,6vw,56px);}
 .about-img{
   width:100%; aspect-ratio:4/3; object-fit:cover;
   border-radius:18px; border:1px solid var(--line);
@@ -601,12 +602,12 @@
 </header>
 
 <section id="about" class="container section">
+  <div class="reveal">
+    <h2 id="das-projekt">Das Projekt</h2>
+    <p class="lead">Aus einer Forschungsfrage wurde ein Event: SHEWAVES fördert, vernetzt und feiert Frauen in der elektronischen Musikszene.</p>
+  </div>
   <div class="grid reveal">
-    <div>
-      <h2 id="das-projekt">Das Projekt</h2>
-      <p class="lead">Aus einer Forschungsfrage wurde ein Event: SHEWAVES fördert, vernetzt und feiert Frauen in der elektronischen Musikszene.</p>
-      <p>SHEWAVES entstand im Rahmen meiner Bachelorarbeit im Studiengang Multimedia Production. Ausgangspunkt war die Frage, weshalb Frauen in der elektronischen Musikszene noch immer deutlich weniger sichtbar sind als ihre männlichen Kollegen. Die Antwort blieb nicht theoretisch: Aus der Forschung entstand ein reales Event – von der Konzeption über Branding und Kommunikation bis zur Eventnacht mit sechs Artists.</p>
-    </div>
+    <p>SHEWAVES entstand im Rahmen meiner Bachelorarbeit im Studiengang Multimedia Production. Ausgangspunkt war die Frage, weshalb Frauen in der elektronischen Musikszene noch immer deutlich weniger sichtbar sind als ihre männlichen Kollegen. Die Antwort blieb nicht theoretisch: Aus der Forschung entstand ein reales Event – von der Konzeption über Branding und Kommunikation bis zur Eventnacht mit sechs Artists.</p>
     <img src="SHEWAVES.jpg" alt="SHEWAVES Event" class="about-img">
   </div>
 </section>
