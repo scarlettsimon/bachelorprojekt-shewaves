@@ -130,34 +130,27 @@
   .hero{
     position:relative; min-height:100vh; min-height:100svh;
     display:flex; align-items:center; justify-content:center;
-    text-align:center; overflow:hidden;
-    padding:110px clamp(20px,5vw,24px) 56px;
+    text-align:center; overflow:hidden; padding:0 clamp(20px,5vw,24px);
     background-image:
       linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.88)),
       url("SHEWAVES.jpg");
     background-size:cover;
     background-position:center 35%;
-    --speed:1;                 /* Wellen-Tempo: wird bei Play schneller */
   }
   .wave-field{
     position:absolute; inset:0; display:flex; align-items:flex-end;
     justify-content:space-between; opacity:0.4; z-index:0;
     width:100%; padding:0 4px;
-    transition:opacity .8s ease;
   }
   .wave-field span{
     flex:1; max-width:5px; border-radius:3px; background:var(--grad);
-    animation:wave calc(var(--dur,2.2s) * var(--speed)) ease-in-out var(--delay,0s) infinite;
+    animation:wave var(--dur,2.2s) ease-in-out var(--delay,0s) infinite;
     transform-origin:bottom;
   }
   @keyframes wave{ 0%,100%{transform:scaleY(0.25);} 50%{transform:scaleY(1);} }
 
-  /* Musik läuft: Wellen werden präsenter und schneller */
-  .hero.playing{--speed:0.5;}
-  .hero.playing .wave-field{opacity:0.75;}
-
   .hero-content{
-    position:relative; z-index:1; max-width:720px; width:100%;
+    position:relative; z-index:1; max-width:720px;
     opacity:0; transform:translateY(24px);
     animation:rise 1s ease forwards .2s;
   }
@@ -185,37 +178,55 @@
   }
   .btn:hover{background:var(--fg); color:var(--bg);}
 
-  /* ---------- HERO PLAYER (Shewaves Radio) ---------- */
-  .hero-player{
+  /* ---------- SHEWAVES RADIO ---------- */
+  #radio{
+    position:relative; overflow:hidden;
+    padding-bottom:0;            /* Wellen laufen bis an die Sektionskante */
+  }
+  .radio-inner{
+    position:relative; z-index:2; text-align:center;
+  }
+  .radio-player{
     max-width:480px; width:100%;
-    margin:44px auto 0;
+    margin:0 auto;
     border-radius:14px;
     box-shadow:0 8px 40px rgba(0,0,0,0.5);
     transition:box-shadow .8s ease;
   }
-  .hero.playing .hero-player{
-    box-shadow:0 0 60px rgba(255,0,0,0.3);
-  }
-  #embed-iframe, .hero-player iframe{
+  #radio.playing .radio-player{box-shadow:0 0 60px rgba(255,0,0,0.3);}
+  #embed-iframe, .radio-player iframe{
     display:block; width:100%; border:0; border-radius:14px;
   }
-  .hero-status{
+  .radio-status{
     font-family:'IBM Plex Mono',monospace; font-size:12px;
     letter-spacing:0.14em; text-transform:uppercase;
     color:var(--muted); margin-top:16px;
     transition:color .4s ease;
   }
-  .hero.playing .hero-status{color:var(--c7);}
-  .hero-caption{
+  #radio.playing .radio-status{color:var(--c7);}
+  .radio-caption{
     font-family:'IBM Plex Mono',monospace; font-size:10.5px;
     letter-spacing:0.12em; text-transform:uppercase;
     color:var(--muted); opacity:0.7; margin-top:6px;
   }
-
-  @media (max-height:760px){
-    .hero h1{margin-bottom:16px;}
-    .hero > .hero-content > p{margin-bottom:24px;}
-    .hero-player{margin-top:28px;}
+  .radio-waves{
+    position:relative; z-index:1;
+    display:flex; align-items:flex-end; justify-content:space-between;
+    height:180px; padding:0 4px; margin-top:44px;
+    opacity:0.4; transition:opacity .8s ease;
+    pointer-events:none;
+  }
+  .radio-waves span{
+    flex:1; max-width:5px; border-radius:3px; background:var(--grad);
+    transform:scaleY(0.35); transform-origin:bottom;
+    transition:transform .6s ease;
+  }
+  #radio.playing .radio-waves span{
+    animation:wave var(--dur,2.2s) ease-in-out var(--delay,0s) infinite;
+  }
+  #radio.playing .radio-waves{opacity:0.8;}
+  @media (max-width:640px){
+    .radio-waves{height:130px;}
   }
 
   /* ---------- reveal on scroll ---------- */
@@ -585,13 +596,6 @@
     <h1>SHEWAVES</h1>
     <p>Wie aus einer wissenschaftlichen Fragestellung eine Plattform für Frauen in der elektronischen Musik entstand.</p>
     <a href="#das-projekt" class="btn">Geschichte entdecken</a>
-
-    <!-- Shewaves Radio: kompakter Player auf den Wellen -->
-    <div class="hero-player">
-      <div id="embed-iframe"></div>
-    </div>
-    <p class="hero-status" id="heroStatus">■ Drück Play</p>
-    <p class="hero-caption">Alle Tracks von weiblichen Artists</p>
   </div>
 </header>
 
@@ -604,6 +608,19 @@
     </div>
     <img src="SHEWAVES.jpg" alt="SHEWAVES Event" class="about-img">
   </div>
+</section>
+
+<!-- ---------- SHEWAVES RADIO ---------- -->
+<section id="radio" class="section">
+  <div class="container radio-inner reveal">
+    <p class="eyebrow">Shewaves Radio</p>
+    <div class="radio-player">
+      <div id="embed-iframe"></div>
+    </div>
+    <p class="radio-status" id="radioStatus">■ Drück Play</p>
+    <p class="radio-caption">Alle Tracks von weiblichen Artists</p>
+  </div>
+  <div class="radio-waves" id="radioWaves" aria-hidden="true"></div>
 </section>
 
 <section id="research" class="section light">
@@ -825,8 +842,6 @@ From a young age, she was drawn to electronic music and quickly found her passio
       const bar = document.createElement('span');
       const h = 30 + Math.random()*220;
       bar.style.height = h + 'px';
-      /* Dauer & Delay als CSS-Variablen, damit das Tempo
-         beim Abspielen per --speed beschleunigt werden kann */
       bar.style.setProperty('--dur', (1.6 + Math.random()*1.4).toFixed(2) + 's');
       bar.style.setProperty('--delay', (Math.random()*2).toFixed(2) + 's');
       field.appendChild(bar);
@@ -914,14 +929,29 @@ requestAnimationFrame(step);
   });
   </script>
 
-  <!-- ---------- SHEWAVES RADIO im Hero ---------- -->
+  <!-- ---------- SHEWAVES RADIO ---------- -->
+  <script>
+  (function(){
+    /* Wellen-Bars der Radio-Sektion erzeugen — ruhig im Idle,
+       animiert erst, wenn Musik läuft */
+    const waves = document.getElementById('radioWaves');
+    for(let i=0;i<100;i++){
+      const bar = document.createElement('span');
+      bar.style.height = (30 + Math.random()*150) + 'px';
+      bar.style.setProperty('--dur', (1.6 + Math.random()*1.4).toFixed(2) + 's');
+      bar.style.setProperty('--delay', (Math.random()*2).toFixed(2) + 's');
+      waves.appendChild(bar);
+    }
+  })();
+  </script>
+
   <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
   <script>
   const SHEWAVES_PLAYLIST = 'spotify:playlist:4PiztrX5uwegMKM9bhobwu';
 
   window.onSpotifyIframeApiReady = (IFrameAPI) => {
-    const hero = document.getElementById('top');
-    const status = document.getElementById('heroStatus');
+    const radio = document.getElementById('radio');
+    const status = document.getElementById('radioStatus');
     const element = document.getElementById('embed-iframe');
 
     IFrameAPI.createController(element, {
@@ -932,7 +962,7 @@ requestAnimationFrame(step);
     }, (EmbedController) => {
       EmbedController.addListener('playback_update', (e) => {
         const isPlaying = !e.data.isPaused;
-        hero.classList.toggle('playing', isPlaying);
+        radio.classList.toggle('playing', isPlaying);
         status.textContent = isPlaying
           ? '▶ Now Playing — Shewaves Radio'
           : '■ Drück Play';
