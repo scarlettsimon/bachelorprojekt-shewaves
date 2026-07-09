@@ -187,15 +187,16 @@
     position:relative; z-index:2; text-align:center;
   }
   .radio-player{
-    max-width:480px; width:100%;
+    max-width:560px; width:100%;
     margin:0 auto;
     border-radius:14px;
+    overflow:hidden;             /* rundet die Ecken des SoundCloud-iframes */
     box-shadow:0 8px 40px rgba(0,0,0,0.5);
     transition:box-shadow .8s ease;
   }
   #radio.playing .radio-player{box-shadow:0 0 60px rgba(255,0,0,0.3);}
-  #embed-iframe, .radio-player iframe{
-    display:block; width:100%; border:0; border-radius:14px;
+  .radio-player iframe{
+    display:block; width:100%; border:0;
   }
   .radio-status{
     font-family:'IBM Plex Mono',monospace; font-size:12px;
@@ -615,7 +616,7 @@
   <div class="container radio-inner reveal">
     <p class="eyebrow">Shewaves Radio</p>
     <div class="radio-player">
-      <div id="embed-iframe"></div>
+      <iframe id="sc-player" title="Shewaves Radio – SoundCloud Playlist" width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay"></iframe>
     </div>
     <p class="radio-status" id="radioStatus">■ Drück Play</p>
     <p class="radio-caption">Alle Tracks von weiblichen Artists</p>
@@ -945,30 +946,36 @@ requestAnimationFrame(step);
   })();
   </script>
 
-  <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
+  <script src="https://w.soundcloud.com/player/api.js"></script>
   <script>
-  const SHEWAVES_PLAYLIST = 'spotify:playlist:4PiztrX5uwegMKM9bhobwu';
+  /* Hier deine SoundCloud-Playlist-URL einsetzen:
+     Playlist auf soundcloud.com öffnen und den Link aus der
+     Adresszeile kopieren (Format: soundcloud.com/DEIN-PROFIL/sets/PLAYLIST-NAME) */
+  const SHEWAVES_SC_PLAYLIST = 'https://soundcloud.com/scar-939515676/sets/shewaves';
 
-  window.onSpotifyIframeApiReady = (IFrameAPI) => {
+  (function(){
+    const iframe = document.getElementById('sc-player');
     const radio = document.getElementById('radio');
     const status = document.getElementById('radioStatus');
-    const element = document.getElementById('embed-iframe');
 
-    IFrameAPI.createController(element, {
-      uri: SHEWAVES_PLAYLIST,
-      width: '100%',
-      height: 152,               /* kompakte Player-Variante */
-      theme: 'dark'
-    }, (EmbedController) => {
-      EmbedController.addListener('playback_update', (e) => {
-        const isPlaying = !e.data.isPaused;
-        radio.classList.toggle('playing', isPlaying);
-        status.textContent = isPlaying
-          ? '▶ Now Playing — Shewaves Radio'
-          : '■ Drück Play';
-      });
-    });
-  };
+    /* Player laden – Farbe = SHEWAVES-Rot */
+    iframe.src = 'https://w.soundcloud.com/player/?url=' + encodeURIComponent(SHEWAVES_SC_PLAYLIST)
+      + '&color=%23ff0000&auto_play=false&hide_related=true&show_comments=false'
+      + '&show_user=true&show_reposts=false&show_teaser=false&visual=false';
+
+    const widget = SC.Widget(iframe);
+
+    function setPlaying(isPlaying){
+      radio.classList.toggle('playing', isPlaying);
+      status.textContent = isPlaying
+        ? '▶ Now Playing — Shewaves Radio'
+        : '■ Drück Play';
+    }
+
+    widget.bind(SC.Widget.Events.PLAY,   () => setPlaying(true));
+    widget.bind(SC.Widget.Events.PAUSE,  () => setPlaying(false));
+    widget.bind(SC.Widget.Events.FINISH, () => setPlaying(false));
+  })();
   </script>
 
   </body>
